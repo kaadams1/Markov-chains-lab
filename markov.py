@@ -42,14 +42,10 @@ def make_chains(text_string):
     """
 
     chains = {}
-    
     i = 0
-
-    
     words = text_string.split()
 
     for i in range(len(words) - 2):
-
         key = (words[i], words[i + 1])
         value = words[i + 2]
 
@@ -57,39 +53,24 @@ def make_chains(text_string):
             chains[key] = []
         chains[key].append(value)
             
-
-    # print(chains)
     return chains
 
 
 def make_text(chains):
     """Return text from chains."""
+    random_key = choice(list(chains.keys())) #gives sorted list of tuples
+    words = [random_key[0], random_key[1]] #gives us our first two words in the list
+    random_word = choice(chains[random_key]) #gives us our next word to start the next tuple
+    # print(random_word)
 
-    words = []
-
-    # random_key = choice(list(chains.keys))
-    # random_value = choice(chains[key])
-
-
-    first_word = choice(list(chains.keys()))
-    first_word = first_word.items()
-
-    print(first_word)
-
-    # your code goes here
-
-    #for each key, choose a value
-    #move on to next key, repeat
-    #until end of dictionary
-
-
-    # while True:
-    #     if value.endswith('?'):
-    #         break
-    #     else:
-    #     # continue adding to sentence
-    #         words.append(value)
-    #     #words.append(value)
+    while random_word is not None: #while we still have words to choose from
+        random_key = (random_key[1], random_word) #create new key from the second element in key plus the random word
+        words.append(random_word) #add random word to the words list
+        
+        if random_key in chains:
+            random_word = choice(chains[random_key])  #continue the choice loop/selection of random words until while loop breaks
+        else:
+            break
 
     return ' '.join(words)
 
