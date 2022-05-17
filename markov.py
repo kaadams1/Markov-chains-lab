@@ -9,10 +9,11 @@ def open_and_read_file(file_path):
     Takes a string that is a file path, opens the file, and turns
     the file's contents as one string of text.
     """
+    text = open(file_path).read()
+    
+    return text
+    
 
-    # your code goes here
-
-    return 'Contents of your file as one long string'
 
 
 def make_chains(text_string):
@@ -41,9 +42,23 @@ def make_chains(text_string):
     """
 
     chains = {}
+    
+    i = 0
 
-    # your code goes here
+    
+    words = text_string.split()
 
+    for i in range(len(words) - 2):
+
+        key = (words[i], words[i + 1])
+        value = words[i + 2]
+
+        if key not in chains:
+            chains[key] = []
+        chains[key].append(value)
+            
+
+    # print(chains)
     return chains
 
 
@@ -52,7 +67,29 @@ def make_text(chains):
 
     words = []
 
+    # random_key = choice(list(chains.keys))
+    # random_value = choice(chains[key])
+
+
+    first_word = choice(list(chains.keys()))
+    first_word = first_word.items()
+
+    print(first_word)
+
     # your code goes here
+
+    #for each key, choose a value
+    #move on to next key, repeat
+    #until end of dictionary
+
+
+    # while True:
+    #     if value.endswith('?'):
+    #         break
+    #     else:
+    #     # continue adding to sentence
+    #         words.append(value)
+    #     #words.append(value)
 
     return ' '.join(words)
 
