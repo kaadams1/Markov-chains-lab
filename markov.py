@@ -1,5 +1,5 @@
 """Generate Markov text from text files."""
-
+import sys
 from random import choice
 
 
@@ -58,24 +58,26 @@ def make_chains(text_string):
 
 def make_text(chains):
     """Return text from chains."""
+    
     random_key = choice(list(chains.keys())) #gives sorted list of tuples
-    words = [random_key[0], random_key[1]] #gives us our first two words in the list
-    random_word = choice(chains[random_key]) #gives us our next word to start the next tuple
-    # print(random_word)
+    
+    if random_key[0][0].isupper():
+        words = [random_key[0], random_key[1]] #gives us our first two words in the list
+        random_word = choice(chains[random_key]) #gives us our next word to start the next tuple
 
-    while random_word is not None: #while we still have words to choose from
-        random_key = (random_key[1], random_word) #create new key from the second element in key plus the random word
-        words.append(random_word) #add random word to the words list
-        
-        if random_key in chains:
-            random_word = choice(chains[random_key])  #continue the choice loop/selection of random words until while loop breaks
-        else:
-            break
+        while random_word is not None: #while we still have words to choose from
+            random_key = (random_key[1], random_word) #create new key from the second element in key plus the random word
+            words.append(random_word) #add random word to the words list
+            
+            if random_key in chains:
+                random_word = choice(chains[random_key])  #continue the choice loop/selection of random words until while loop breaks
+            else:
+                break
 
-    return ' '.join(words)
+        return ' '.join(words)
 
 
-input_path = 'green-eggs.txt'
+input_path = sys.argv[1]
 
 # Open the file and turn it into one long string
 input_text = open_and_read_file(input_path)
